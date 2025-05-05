@@ -1,131 +1,69 @@
-# Callback Manager
+# Task Manager
 
-A TypeScript utility for managing asynchronous callbacks with controlled parallelism.
+A lightweight TypeScript utility for managing asynchronous task execution with controlled parallelism.
 
 ## Features
 
-- Queue-based execution of asynchronous tasks
-- Configurable maximum parallel execution
-- FIFO (First-In-First-Out) task processing
+- Controlled parallel execution of async tasks (default: 10 concurrent tasks)
+- FIFO queue-based execution
+- Promise-based API with TypeScript type safety
 - Task status tracking
-- Promise-based API for easy integration
-- Type-safe with TypeScript generics
 
-## Installation
-
-```bash
-npm install callback-manager
-```
-
-## Basic Usage
+## Usage
 
 ```typescript
-import { cbManager } from 'callback-manager';
+import { cbManager } from './lib';
 
-// Define an async task function
-const fetchData = async (url: string): Promise<Response> => {
+// Define an async task
+const fetchData = async (url: string) => {
   const response = await fetch(url);
-  return response;
+  return response.json();
 };
 
-// Add tasks to the queue and get promises
+// Add tasks to the queue
 const promise1 = cbManager.addTask(fetchData, ['https://api.example.com/data1']);
 const promise2 = cbManager.addTask(fetchData, ['https://api.example.com/data2']);
-const promise3 = cbManager.addTask(fetchData, ['https://api.example.com/data3']);
 
-// Wait for all tasks to complete
-const results = await Promise.all([promise1, promise2, promise3]);
+// Process all tasks and get results
+const results = await Promise.all([promise1, promise2]);
 
-// Check manager status
+// Check execution status
 const status = cbManager.getStatus();
 console.log(`Status: ${status.status}, Executing: ${status.executing}, Waiting: ${status.waiting}`);
 ```
 
-## Advanced Usage
-
-### Creating a Custom CallbackManager
+## Custom Configuration
 
 ```typescript
-import { CallbackManager } from 'callback-manager';
+import { CallbackManager } from './lib';
 
-// Create a custom manager with 5 maximum parallel tasks
-const customManager = new CallbackManager(5);
+// Create manager with custom parallelism (3 concurrent tasks)
+const customManager = new CallbackManager(3);
 
 // Use the custom manager
-customManager.addTask(async () => {
-  // Your async logic here
-});
+const taskPromise = customManager.addTask(myAsyncFunction, [arg1, arg2]);
 ```
 
-### Type-Safe Task Execution
-
-```typescript
-interface User {
-  id: number;
-  name: string;
-}
-
-// Type-safe task with specific arguments and return type
-const fetchUser = async (id: number): Promise<User> => {
-  const response = await fetch(`https://api.example.com/users/${id}`);
-  return response.json();
-};
-
-// TypeScript will infer the correct types
-const userPromise = cbManager.addTask(fetchUser, [123]);
-const user = await userPromise; // user is of type User
-```
-
-## Architecture
-
-The library is organized into the following components:
-
-### Core Classes
-
-- `CallbackManager` - Main class for managing tasks
-- `Task` - Represents a single task to be executed
-- `TaskProcessor` - Handles the execution of a task
-
-### Utility Classes
-
-- `QueueManager` - Manages the task queues
-- `PromiseManager` - Handles promise resolution for tasks
-- `StatusManager` - Tracks execution status
-
-### Types and Constants
-
-- `TaskStatus` - Enum for task status (PENDING, RESOLVED, REJECTED)
-- `ExecutionStatus` - Enum for manager status (NOT_STARTED, EXECUTING, FINISHED)
-- `TASK_EXECUTION` - Constants for task execution configuration
-
-## API Reference
+## API
 
 ### CallbackManager
 
-```typescript
-// Create a manager with a custom parallel limit
-const manager = new CallbackManager(10);
+- `new CallbackManager(maxParallelTasks?: number)` - Create a new manager
+- `addTask<T>(callback: Function, args: any[]): Promise<T>` - Add a task to the queue
+- `getStatus(): ManagerStatus` - Get execution status
+- `reset(): void` - Reset manager state
 
-// Add a task to the queue
-const promise = manager.addTask(asyncFunction, [arg1, arg2]);
+### Default Constants
 
-// Get current status
-const status = manager.getStatus();
+- Default maximum parallel tasks: 10
+- Default task timeout: 30 seconds
 
-// Reset the manager state
-manager.reset();
-```
+## Architecture
 
-### Status Object
-
-```typescript
-{
-  waiting: number;   // Number of tasks waiting to be executed
-  executing: number; // Number of tasks currently executing
-  status: ExecutionStatus; // Overall execution status
-}
-```
-
-## License
-
-MIT # task-executer
+- `CallbackManager`: Main entry point for task management
+- `Task`: Represents an executable task
+- `TaskProcessor`: Handles task execution
+- Utility classes:
+  - `QueueManager`: Manages waiting/executing task queues
+  - `PromiseManager`: Handles promise resolution
+  - `StatusManager`: Tracks execution status

@@ -1,0 +1,24 @@
+test
+ i.          Abc lpw wlp alc     /
+ 
+ 
+Equal
+ i.          Abc lwp       /
+ ii.         Qwq fkf       // seems that q === f.
+ iii.        Meep dook     // if we have dup, the parlel will have dup either
+ iiii.       abcd jklm jklq
+ iiiii.      iiffttkk llwwbbyy yybbwwll aabbccdd
+ iiiiii.     ii aa bb cc dd  ia is 
+ iiiiiii.     ibityp cecwzl
+ iiiiiii.     010234 010234
+
+
+ a.        Not equal
+ i.          R a
+ ii.         Add bqq
+ iii.        Abcd jklp
+
+
+rules
+ 1. the amount of uniqness charcters must be the same.
+ 2. once a character "registered", in case it should repeat in the string, the distance between the repetations should be equal as its parralel.
