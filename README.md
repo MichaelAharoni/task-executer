@@ -9,6 +9,36 @@ A lightweight TypeScript utility for managing asynchronous task execution with c
 - Promise-based API with TypeScript type safety
 - Task status tracking
 
+## Pattern Detection Utilities
+
+This project also includes pattern detection utilities for comparing strings:
+
+### Standard Pattern Detection
+
+`pattern-detection.ts` provides character pattern matching capabilities:
+
+```typescript
+import { validatePattern } from './solutions/patterns-detection/pattern-detection';
+
+const result = validatePattern('abba', 'xyyx');
+// result: { isPatternMatch: true, pattern: '0110' }
+```
+
+The standard implementation maps each unique character to sequential numbers (0, 1, 2...) and compares patterns.
+
+### Binary Pattern Detection
+
+`pattern-detection-binary.ts` offers an alternative implementation using binary representations with comma-separated values:
+
+```typescript
+import { validatePattern } from './solutions/patterns-detection-binary/pattern-detection-binary';
+
+const result = validatePattern('abca', 'xyza');
+// result: { isPatternMatch: true, pattern: '0,1,10,0' }
+```
+
+> **Note**: The binary pattern detection is a fun implementation that assigns binary values to characters in sequence (0, 1, 10, 11, etc.). This approach was developed through a collaborative conversation to explore alternative pattern representation.
+
 ## Usage
 
 ```typescript
