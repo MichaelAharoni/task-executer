@@ -1,5 +1,5 @@
 import { cbManager } from '../callback-manager';
-import { TaskTracker, createSumTask, createTrackedTask, createFifoTestTask } from './test-helpers';
+import { TaskTracker, createSumTask, createTrackedTask, createFifoTestTask } from './test-helper';
 import { TASK_EXECUTION } from '../constants';
 
 describe('CallbackManager', () => {
