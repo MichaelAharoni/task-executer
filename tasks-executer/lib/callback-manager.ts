@@ -96,5 +96,5 @@ export class CallbackManager {
 /**
  * Singleton instance of the CallbackManager
  */
-export const cbManager = new CallbackManager();
+export const cbManager = new CallbackManager(TASK_EXECUTION.MAX_PARALLEL);
 export default cbManager;
