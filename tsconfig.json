@@ -11,7 +11,7 @@
   },
   "include": [
     "index.ts",
-    "lib/**/*.ts",
+    "tasks-executer/lib/**/*.ts",
     "__tests__/**/*.ts"
   ],
   "exclude": [
