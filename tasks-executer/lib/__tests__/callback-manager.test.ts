@@ -16,7 +16,7 @@ describe('CallbackManager', () => {
     const tracker = new TaskTracker();
 
     // Create an array to store promises for all tasks
-    const taskPromises = [];
+    const taskPromises: Promise<string>[] = [];
 
     // Create more tasks than the maximum parallel limit
     const totalTasks = TASK_EXECUTION.MAX_PARALLEL * 2;
@@ -39,7 +39,7 @@ describe('CallbackManager', () => {
 
     // To test FIFO behavior we'll add tasks with increasing delays
     // The execution order should still match the order they were added
-    const taskPromises = [];
+    const taskPromises: Promise<string>[] = [];
     const totalTasks = 10;
 
     for (let i = 0; i < totalTasks; i++) {
